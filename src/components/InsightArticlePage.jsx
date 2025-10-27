@@ -190,7 +190,7 @@ export default function InsightArticlePage() {
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={{
-                img: ({ node, ...props }) => (
+                img: (props) => (
                   // ensure markdown images are lazy-loaded and decoded async
                   // keep classes and alt text
                   <img {...props} loading="lazy" decoding="async" alt={props.alt || ''} />

@@ -14,7 +14,7 @@ import { HelmetProvider } from "react-helmet-async";
   ScrollToTopOnRouteChange:
   Ensures every route starts at the top instead of mid-scroll.
 */
-function ScrollToTopOnRouteChange() {
+export function ScrollToTopOnRouteChange() {
   const location = useLocation();
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });

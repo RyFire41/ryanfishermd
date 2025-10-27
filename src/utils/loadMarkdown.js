@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import fm from "front-matter";
 
 export function loadMarkdownPosts() {
   const dir = path.resolve("src/content/insights");
@@ -9,8 +10,13 @@ export function loadMarkdownPosts() {
     .map((filename) => {
       const filePath = path.join(dir, filename);
       const fileContents = fs.readFileSync(filePath, "utf8");
-      const { data, content } = matter(fileContents);
-      return { ...data, content, slug: filename.replace(/\.md$/, ""), __filename: filename };
+      const { attributes, body } = fm(fileContents);
+      return {
+        ...attributes,
+        content: body,
+        slug: filename.replace(/\.md$/, ""),
+        __filename: filename,
+      };
     })
     // remove drafts (files with `draft: true` in frontmatter)
     .filter((p) => !p || !p.draft)

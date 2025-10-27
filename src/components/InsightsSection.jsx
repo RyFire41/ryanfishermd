@@ -45,12 +45,13 @@ const insights = Object.entries(mdFiles)
   .sort((a, b) => new Date(b.date) - new Date(a.date));
 
 // Format date to U.S. style
-function formatDate(dateString) {
+function formatDate(dateString, overrides = {}) {
   const date = new Date(dateString);
   return date.toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
+    ...overrides,
   });
 }
 
@@ -68,22 +69,22 @@ export function InsightsPreview() {
 
       <div className="mt-6 grid gap-6 sm:grid-cols-2">
 
-{latestInsights.map((entry, idx) => {
-  const slug = slugify(entry.title, { lower: true, strict: true });
-  return (
-  <Link
-      key={idx}
-      to={`/insights/${slug}`}
-      className="block rounded-2xl border border-[#e9e5da] bg-[#fbf9f5] p-5 hover:bg-[#f9f6f0] transition-colors duration-200"
-    >
-      <h3 className="font-semibold text-[#1f2937] text-lg">{entry.title}</h3>
-      <p className="mt-2 text-sm text-[#374151]">{entry.summary}</p>
-      <p className="mt-3 text-xs text-[#6b7280] italic">
-        {new Date(entry.date).toLocaleDateString("en-US")}
-      </p>
-    </Link>
-  );
-})}
+          {latestInsights.map((entry) => {
+            const slug = slugify(entry.title, { lower: true, strict: true });
+            return (
+              <Link
+                key={entry.slug ?? slug}
+                to={`/insights/${slug}`}
+                className="block rounded-2xl border border-[#e9e5da] bg-[#fbf9f5] p-5 hover:bg-[#f9f6f0] transition-colors duration-200"
+              >
+                <h3 className="font-semibold text-[#1f2937] text-lg">{entry.title}</h3>
+                <p className="mt-2 text-sm text-[#374151]">{entry.summary}</p>
+                <p className="mt-3 text-xs text-[#6b7280] italic">
+                  {formatDate(entry.date)}
+                </p>
+              </Link>
+            );
+          })}
 
       </div>
 
@@ -138,7 +139,7 @@ useEffect(() => {
             Reflections and educational writings from Dr. Ryan M. Fisher, MD.
           </p>
 
-          {visible.map((entry, idx) => (
+          {visible.map((entry) => (
             <section
               key={entry.slug}
               id={entry.slug}
@@ -148,11 +149,7 @@ useEffect(() => {
                 {entry.title}
               </h2>
               <p className="text-sm text-[#6b7280] italic mb-6">
-                {new Date(entry.date).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
+                {formatDate(entry.date, { month: "long" })}
                 {" • "}
                 {estimateReadingTime(entry.content)}
               </p>
