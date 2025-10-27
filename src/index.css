@@ -1,0 +1,202 @@
+@import "tailwindcss";
+
+/* Global background + smoothing */
+body {
+  background-color: #F4EFE4;
+  color: #1f2937;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Brand fonts (already loaded via index.html) */
+.brand-script { font-family: "Allura", cursive; }
+.brand-serif  { font-family: "Cormorant Garamond", serif; }
+
+/* Focus utility */
+@layer utilities {
+  .focus-ring:focus {
+    outline: 2px solid #8DA38A;
+    outline-offset: 2px;
+  }
+}
+
+/* Fade-in animation used on article */
+@layer utilities {
+  @keyframes fadeInDr {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in {
+    animation: fadeInDr 300ms ease-out both;
+  }
+
+  /* Floating button fade (show/hide) */
+  .fade-toggle {
+    transition: opacity 200ms ease, transform 200ms ease;
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  .fade-toggle.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Skip link (visible on keyboard focus) */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 0.75rem;
+  background: white;
+  border: 1px solid #e9e5da;
+  border-radius: 0.375rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  z-index: 60;
+  color: #2F4634;
+}
+
+/* Stable, plugin-free Markdown typography */
+@layer components {
+  .prose-dr {
+    max-width: 42rem;          /* ~672px, comfortable line length */
+    margin: 0 auto;
+    color: #1f2937;            /* gray-800 */
+    line-height: 1.75;         /* relaxed */
+  }
+
+  /* Headings: clear scale and spacing */
+  .prose-dr h1 {
+    font-size: 2rem;           /* ~text-3xl */
+    line-height: 1.25;
+    font-weight: 600;
+    color: #2F4634;
+    margin: 2rem 0 1rem;
+  }
+  .prose-dr h2 {
+    font-size: 1.5rem;         /* ~text-2xl */
+    line-height: 1.3;
+    font-weight: 600;
+    color: #2F4634;
+    margin: 1.75rem 0 0.75rem;
+  }
+  .prose-dr h3 {
+    font-size: 1.25rem;        /* ~text-xl */
+    line-height: 1.35;
+    font-weight: 600;
+    color: #2F4634;
+    margin: 1.25rem 0 0.5rem;
+  }
+
+  /* Paragraphs and basic text rhythm */
+  .prose-dr p { margin: 1rem 0; }
+  .prose-dr strong { font-weight: 600; color: #1f2937; }
+  .prose-dr em { font-style: italic; }
+
+  /* Lists */
+  .prose-dr ul, .prose-dr ol { margin: 1rem 0 1rem 1.25rem; }
+  .prose-dr li { margin: 0.375rem 0; }
+  .prose-dr ul { list-style: disc; }
+  .prose-dr ol { list-style: decimal; }
+
+  /* Horizontal rule */
+  .prose-dr hr {
+    border: 0;
+    border-top: 1px solid #e9e5da;
+    margin: 2rem 0;
+  }
+
+  /* Blockquotes */
+  .prose-dr blockquote {
+    font-style: italic;
+    border-left: 4px solid #8DA38A;
+    padding-left: 1rem;
+    margin: 1.25rem 0;
+    color: #374151;            /* gray-700 */
+  }
+
+  /* Links */
+  .prose-dr a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-color: #8DA38A;
+    color: #2F4634;
+  }
+  .prose-dr a:hover { color: #8DA38A; }
+
+  /* Tables */
+  .prose-dr table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1.5rem 0;
+    font-size: 0.95rem;
+  }
+  .prose-dr thead th {
+    text-align: left;
+    border-bottom: 1px solid #2F4634;
+    padding: 0.5rem 0.25rem;
+    color: #2F4634;
+  }
+  .prose-dr td, .prose-dr th {
+    padding: 0.5rem 0.25rem;
+    vertical-align: top;
+  }
+  /* Vertical column dividers: draw a left border on each cell except the first in its row */
+  .prose-dr td + td,
+  .prose-dr th + th {
+    border-left: 1px solid #e9e5da; /* subtle divider */
+  }
+  /* If you prefer the divider to match the header color, swap to #2F4634 above */
+  /* Remove the rightmost inner border for a clean table edge (keeps outer table border intact) */
+  /* Note: if your table relies on an outer border, prefer adding a wrapper or table-border instead of
+     removing the last cell's left border which can hide internal dividers in some table structures. */
+
+  /* Images */
+  .prose-dr img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.75rem;    /* rounded-xl */
+    margin: 1rem 0;
+  }
+
+  /* Code */
+  .prose-dr code {
+    background: #f3f4f6;       /* gray-100 */
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.375rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.95em;
+  }
+  .prose-dr pre {
+    background: #f3f4f6;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+}
+
+/* Print-friendly tweaks */
+@media print {
+  header, nav, .no-print { display: none !important; }
+  article { box-shadow: none !important; border: none !important; }
+  body { background: #ffffff !important; }
+}
+
+/* Responsive table wrapper */
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.table-scroll table { min-width: 600px; }
