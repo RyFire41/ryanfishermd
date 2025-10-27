@@ -1,5 +1,5 @@
 import React from "react";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 // Header is rendered globally in main.jsx
 import { InsightsPreview } from "./components/InsightsSection.jsx";

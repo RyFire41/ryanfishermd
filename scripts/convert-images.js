@@ -65,7 +65,7 @@ async function convertFile(file) {
     await make(avifOut, 'avif');
 
     // generate @2x versions for logos: do NOT upscale source; only downscale if needed
-    if (base.startsWith('logo-tree')) {
+    if (base.startsWith('logo-tree') && !base.includes('@2x')) {
       try {
         // desired width: the source width but capped by MAX_DIM
         const desired = width ? Math.min(width, MAX_DIM) : null;

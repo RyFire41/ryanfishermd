@@ -8,7 +8,6 @@ import { EducationalTopicsFullPage } from "./components/EducationalTopicsSection
 import About from "./pages/About.jsx";
 import Header from "./components/Header.jsx";
 import "./index.css";
-import { HelmetProvider } from "react-helmet-async";
 
 /* 
   ScrollToTopOnRouteChange:
@@ -24,26 +23,24 @@ export function ScrollToTopOnRouteChange() {
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <HelmetProvider>
-      <BrowserRouter>
-        <div className="h-1 w-full bg-gradient-to-r from-[#bea05f] via-[#8da38a] to-[#c5a755]" aria-hidden="true" />
-        <Header />
-        {/* Enables scroll restoration for all routes */}
-        <ScrollToTopOnRouteChange />
+    <BrowserRouter>
+      <div className="h-1 w-full bg-gradient-to-r from-[#bea05f] via-[#8da38a] to-[#c5a755]" aria-hidden="true" />
+      <Header />
+      {/* Enables scroll restoration for all routes */}
+      <ScrollToTopOnRouteChange />
 
-        <Routes>
-          {/* Main homepage */}
-          <Route path="/" element={<App />} />
+      <Routes>
+        {/* Main homepage */}
+        <Route path="/" element={<App />} />
 
-          {/* Subpages */}
-          <Route path="/insights" element={<InsightsFullPage />} />
-          <Route path="/education" element={<EducationalTopicsFullPage />} />
-          <Route path="/about" element={<About />} />
+        {/* Subpages */}
+        <Route path="/insights" element={<InsightsFullPage />} />
+        <Route path="/education" element={<EducationalTopicsFullPage />} />
+        <Route path="/about" element={<About />} />
 
-          {/* Individual Insight article pages */}
-          <Route path="/insights/:slug" element={<InsightArticlePage />} />
-        </Routes>
-      </BrowserRouter>
-    </HelmetProvider>
+        {/* Individual Insight article pages */}
+        <Route path="/insights/:slug" element={<InsightArticlePage />} />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );

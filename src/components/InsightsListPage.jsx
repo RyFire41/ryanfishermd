@@ -1,6 +1,6 @@
 import React from "react";
 // Header is rendered globally in main.jsx
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import slugify from "slugify";
 
