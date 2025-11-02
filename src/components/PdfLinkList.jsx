@@ -65,7 +65,7 @@ export default function PdfLinkList({ topics = [] }) {
                 const anchorId = sub.toLowerCase().replace(/[^a-z0-9]+/g, "-");
                 return (
                   <div key={sub} id={anchorId} className="mb-8 scroll-mt-24">
-                    <div className="flex items-center gap-2 mb-3">
+                    <div className="inline-flex items-center gap-2 flex-nowrap items-center gap-2 mb-3">
                       {/* <Icon
                         size={18}
                         className="text-[#8DA38A]"
@@ -104,32 +104,26 @@ export default function PdfLinkList({ topics = [] }) {
 function PdfItem({ t }) {
   return (
     <div className="rounded-lg bg-white/70 px-4 py-3 hover:bg-[#e9e5da] transition-colors">
-      <a
-        href={t.pdfUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-2 text-[#2F4634] font-medium"
-      >
-        <FileDown size={16} strokeWidth={2} /> {t.title}
-      </a>
-
       {t.external && (
         <a
           href={t.external}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 mt-1 text-sm text-[#8DA38A] hover:text-[#2F4634]"
+          className="inline-flex items-center gap-2 flex-nowrap text-sm text-[#8DA38A] hover:text-[#2F4634]"
         >
           <ExternalLink size={14} strokeWidth={2} />
-          <span>
-            {t.sourceTitle ||
-              `More information (${new URL(t.external).hostname.replace(
-                "www.",
-                "",
-              )})`}
-          </span>
+          <span>{t.sourceTitle || "More information"}</span>
         </a>
       )}
+      {t.external && <div className="h-2" />} {/* adds small vertical gap */}
+      <a
+        href={t.pdfUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-2 flex-nowrap text-[#2F4634] font-medium"
+      >
+        <FileDown size={16} strokeWidth={2} /> {t.title}
+      </a>
     </div>
   );
 }
